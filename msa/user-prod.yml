@@ -12,9 +12,9 @@ spring:
     mongodb:
       # ▶ 운영: 하드코딩 금지. 환경변수/시크릿로 주입!
       #  - K8s라면 Service FQDN 사용 권장 (예: mongo-svc.default.svc.cluster.local)
-      host: ${MONGO_HOST:mongo-svc.default.svc.cluster.local}
-      port: ${MONGO_PORT:27017}
-      database: ${MONGO_DB:mydb}
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: ${MONGO_DB}
       username: ${MONGO_USER}          # 시크릿/환경변수로만 주입
       password: ${MONGO_PASSWORD}      # 시크릿/환경변수로만 주입
       auto-index-creation: true        # 필요한 컬렉션에 한해 사용. 대규모 트래픽 시 주의
