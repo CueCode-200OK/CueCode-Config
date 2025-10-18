@@ -58,11 +58,7 @@ management:
         include: "*"             # 개발은 전부 노출(beans, env 등) — 운영에선 금지!
   endpoint:
     health:
-      probes:
-        enabled: true
       show-details: always       # 상세 헬스 정보 표시 (개발 디버깅용)
-    shutdown:
-      enabled: true              # /actuator/shutdown 허용 (개발 편의)
 
 logging:
   level:
