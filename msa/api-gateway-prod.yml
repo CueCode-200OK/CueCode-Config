@@ -23,39 +23,39 @@ spring:
           routes:
             # 1. Motion-Service 라우팅
             - id: motion_service_route
-              uri: lb://motion-service
+              uri: http://motion-service:15000
               predicates:
                 - Path=/motions/**
 
             # 2. User-Service 라우팅 (API 경로별로 세분화)
             - id: user_login_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/login/**
             - id: user_users_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/users/**
             - id: user_manager_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/manager/**
             - id: user_patient_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/patient/**
             - id: user_user_info_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/user/**
             - id: user_reg_route
-              uri: lb://user-service
+              uri: http://user-service:11000
               predicates:
                 - Path=/reg/**
 
             # 3. Front-UI 라우팅 규칙 (가장 마지막에 위치해야 함)
             - id: front_ui_route
-              uri: lb://front-ui-service # ★ front-ui를 노출하는 서비스 이름
+              uri: http://front-ui-service:14000
               predicates:
                 - Path=/**
 
