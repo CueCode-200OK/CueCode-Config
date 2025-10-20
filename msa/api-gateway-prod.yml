@@ -6,7 +6,6 @@ server:
   port: 13000                    # 게이트웨이 HTTP 포트
   shutdown: graceful             # 무중단 배포/롤링 업데이트 시 안전
 
-
 spring:
   application:
     name: api-gateway       # Config/로그 식별용 서비스명
@@ -17,9 +16,18 @@ spring:
     gateway:
       server:
         webflux:
-          # ===============================================
-          # ▼▼▼▼▼▼▼▼▼▼ 라우팅 및 CORS 설정 수정 ▼▼▼▼▼▼▼▼▼▼
-          # ===============================================
+          globalcors:
+            cors-configurations:
+              '[/**]': # 모든 경로(/**)에 대해 아래 CORS 정책 적용
+                allowed-origins: "${CORS_ALLOWED_ORIGINS:http://localhost:14000,http://cuecode.kr,https://cuecode.kr}" # Secret이나 환경변수로 주입 권장
+                allowed-methods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowed-headers: "*"
+                allow-credentials: true
           routes:
             # 1. Motion-Service 라우팅
             - id: motion_service_route
@@ -59,21 +67,7 @@ spring:
               predicates:
                 - Path=/**
 
-          # [수정] Spring Cloud Gateway의 공식적인 CORS 설정 방식
-          globalcors:
-            cors-configurations:
-              '[/**]': # 모든 경로(/**)에 대해 아래 CORS 정책 적용
-                allowed-origins: "${CORS_ALLOWED_ORIGINS:http://localhost:14000}" # Secret이나 환경변수로 주입 권장
-                allowed-methods:
-                  - GET
-                  - POST
-                  - PUT
-                  - DELETE
-                  - OPTIONS
-                allowed-headers: "*"
-                allow-credentials: true
-
-# ... management, logging, jwt 등 나머지 설정은 이전과 동일 ...
+# Actuator 설정 (최신 방식)
 management:
   server:
     port: 13001
@@ -81,7 +75,12 @@ management:
   endpoints:
     web:
       exposure:
-        include: [health, info, prometheus]
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+    shutdown:
+      enabled: false
 
 logging:
   level:
