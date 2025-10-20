@@ -17,13 +17,11 @@ spring:
       password: ${MONGO_PASSWORD}
       auto-index-creation: true
       uuid-representation: standard
-    # --- [수정됨] redis가 mongodb와 같은 레벨이 되도록 들여쓰기 수정 ---
     redis:
       host: ${REDIS_HOST}
       port: 6379
       password: ${REDIS_PASSWORD}
 
-  # --- [수정됨] mail이 data와 같은 레벨이 되도록 들여쓰기 수정 ---
   mail:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
@@ -33,51 +31,53 @@ spring:
       mail:
         smtp:
           auth: true
-          starttls:
-            enable: true
+          ssl:
+            enable: true # Use SSL for port 465
+            trust: smtp.naver.com
+        debug: true # Re-adding debug logging for verification
 
 server:
-  port: 11000                          # 유저 서비스 HTTP 포트
-  shutdown: graceful                   # 롤링 업데이트/무중단 배포에 유리
+  port: 11000
+  shutdown: graceful
 
 management:
   server:
-    address: 0.0.0.0                   # 컨테이너/K8s 환경: 모든 인터페이스 바인딩
-    port: 11001                        # Actuator 포트 (외부 노출은 Service/NetworkPolicy로 제어)
+    address: 0.0.0.0
+    port: 11001
   endpoints:
     web:
       exposure:
         include:
           - health
           - info
-          - prometheus                 # Prometheus 사용 시에만
+          - prometheus
   endpoint:
     health:
-      show-details: when_authorized    # 인증된 호출만 상세 정보
+      show-details: when_authorized
     shutdown:
-      enabled: false                   # 운영 종료 엔드포인트 차단
+      enabled: false
   info:
     env:
-      enabled: false                   # 민감 정보 노출 방지 (필요 시 true)
+      enabled: false
 
 logging:
   level:
     root: INFO
     org.springframework.data.mongodb: INFO
 
-# JWT (운영) — 절대 깃에 저장하지 말고 환경변수/시크릿로만 주입
+# JWT (운영)
 jwt:
   token:
     creator: cuecoder
     access:
       valid:
-        time: "300"                    # Access Token 5분 (짧게 유지 권장)
+        time: "300"
       name: jwtAccessToken
     refresh:
       valid:
-        time: "3600"                   # Refresh Token 1시간
+        time: "3600"
       name: jwtRefreshToken
     cookie:
       domain: .cuecode.kr
   secret:
-    key: ${JWT_SECRET}                 # 예: K8s Secret, Vault, NCP Secret Manager 등
+    key: ${JWT_SECRET}
