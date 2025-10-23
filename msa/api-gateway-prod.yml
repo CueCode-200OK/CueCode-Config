@@ -75,6 +75,12 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # 3. Front-UI Service 라우팅 (정적 파일 및 HTML 페이지)
+            - id: front_ui_route
+              uri: http://front-ui-service:14000
+              predicates:
+                - Path=/, /index.html, /user/**, /css/**, /js/**, /images/**, /motion/**, /patient/**, /manager/**
+
 # Actuator 설정 (최신 방식)
 management:
   server:
