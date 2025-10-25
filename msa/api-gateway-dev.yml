@@ -18,7 +18,6 @@ spring:
     gateway:
       # --- 모든 라우팅에 적용될 기본 필터 ---
       default-filters:
-        - AddRequestHeader=X-Gateway-Secret, cue-code-secret-key-for-internal-communication
         - StripPrefix=1
 
       # --- 💡[수정] 최신 버전에 맞게 구조 변경 ---
