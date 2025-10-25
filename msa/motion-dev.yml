@@ -1,7 +1,4 @@
-# 💡[수정] 게이트웨이 신뢰성 검증을 위한 시크릿 키
-gateway:
-  trusted:
-    secret: "cue-code-secret-key-for-internal-communication"
+
 
 # ===============================
 # MOTION-SERVICE (dev) - Spring Config
@@ -20,7 +17,9 @@ spring:
       uuid-representation: standard
     redis:
       uri: "redis://:${REDIS_DB}@localhost:6380"  # Redis 포트 6380으로 변경
-
+gateway:
+  trusted:
+    secret: "cue-code-secret-key-for-internal-communication"
 server:
   port: 15000                          # 모션 서비스 HTTP 포트 (15000으로 변경)
   shutdown: graceful                   # 요청 마무리 후 정상 종료
