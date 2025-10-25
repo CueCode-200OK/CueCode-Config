@@ -5,7 +5,9 @@
 server:
   port: 13000                    # 게이트웨이 HTTP 포트
   shutdown: graceful             # 요청 처리 후 정상 종료 (개발 편의)
-
+gateway:
+  trusted:
+    secret: "cue-code-secret-key-for-internal-communication"
 spring:
   application:
     name: api-gateway       # Config/로그 식별용 서비스명
