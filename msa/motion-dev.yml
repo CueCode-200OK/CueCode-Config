@@ -1,3 +1,8 @@
+# 💡[수정] 게이트웨이 신뢰성 검증을 위한 시크릿 키
+gateway:
+  trusted:
+    secret: "cue-code-secret-key-for-internal-communication"
+
 # ===============================
 # MOTION-SERVICE (dev) - Spring Config
 # 목적: 개발/로컬 테스트용. 로그·Actuator 전면 개방, CORS 완화, 긴 토큰 만료시간.
