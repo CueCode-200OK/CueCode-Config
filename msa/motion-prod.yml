@@ -4,14 +4,17 @@
 # =========================================
 server:
   port: 15000
-  shutdown: graceful # 운영 환경에서는 요청을 모두 처리하고 안전하게 종료하는 것이 중요합니다.
+  shutdown: graceful
+
+# spring: 키 아래에 모든 스프링 관련 설정을 배치합니다.
+spring:
   application:
     name: motion-service
   config:
     activate:
-      on-profile: prod # 이 파일은 prod 프로필에서만 활성화됩니다.
+      on-profile: prod
+  # data: 키를 spring: 아래로 이동시키고 올바르게 들여쓰기합니다.
   data:
-    # --- [수정됨] mongodb와 redis가 data 하위에 있도록 들여쓰기 수정 ---
     mongodb:
       host: ${MONGO_HOST}
       port: ${MONGO_PORT}
@@ -20,9 +23,10 @@ server:
       password: ${MONGO_PASSWORD}
     redis:
       host: ${REDIS_HOST}
-      port: 6379
+      port: ${REDIS_PORT} # K8s Secret에서 값을 가져오도록 수정
       password: ${REDIS_PASSWORD}
 
+# 외부 서비스 URL (독립적인 설정)
 cuecodemotion:
   url: http://cuecode-motion-service:8000
 
@@ -33,29 +37,29 @@ logging:
     org.springframework.web: INFO
     kopo.motionservice: INFO
 
-# Actuator 보안 설정: 운영에서는 최소한의 엔드포인트만 노출합니다.
+# Actuator 보안 설정
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus # 헬스체크, 기본정보, 모니터링 메트릭만 노출
+        include: health,info,prometheus
   endpoint:
     health:
-      show-details: when-authorized # 인증된 호출에 한해 상세 정보 제공
+      show-details: when-authorized
 
-
-      jwt:
-        token:
-          creator: cuecoder
-          access:
-            valid:
-              time: "300"
-            name: jwtAccessToken
-          refresh:
-            valid:
-              time: "3600"
-            name: jwtRefreshToken
-          cookie:
-            domain: .cuecode.kr
-        secret:
-          key: ${JWT_SECRET}
+# JWT 설정을 독립적인 최상위 키로 분리합니다.
+jwt:
+  token:
+    creator: cuecoder
+    access:
+      valid:
+        time: "300"
+      name: jwtAccessToken
+    refresh:
+      valid:
+        time: "3600"
+      name: jwtRefreshToken
+    cookie:
+      domain: .cuecode.kr
+  secret:
+    key: ${JWT_SECRET}
