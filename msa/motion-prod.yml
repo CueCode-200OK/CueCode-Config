@@ -48,6 +48,8 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+      probes:
+        enabled: true
 
 # JWT 설정을 독립적인 최상위 키로 분리합니다.
 jwt:
