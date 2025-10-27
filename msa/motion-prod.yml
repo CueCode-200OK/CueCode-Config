@@ -28,7 +28,7 @@ spring:
 
 # 외부 서비스 URL (독립적인 설정)
 cuecodemotion:
-  url: http://cuecode-motion-service:8000
+  url: http://mediapipe-fastapi:8000
 
 # 운영 환경 로깅 설정
 logging:
