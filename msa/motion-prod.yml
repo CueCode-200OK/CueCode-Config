@@ -63,3 +63,7 @@ jwt:
       domain: .cuecode.kr
   secret:
     key: ${JWT_SECRET}
+
+gateway:
+  trusted:
+    secret: ${GATEWAY_TRUSTED_SECRET:cue-code-secret-key-for-internal-communication}

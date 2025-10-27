@@ -14,6 +14,8 @@ spring:
       on-profile: prod
   cloud:
     gateway:
+      default-filters:
+        - AddRequestHeader=X-Gateway-Secret, ${GATEWAY_TRUSTED_SECRET:cue-code-secret-key-for-internal-communication}
       server:
         webflux:
           globalcors:
