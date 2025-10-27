@@ -75,3 +75,6 @@ jwt:
   secret:
     # ⚠️ 개발 전용 키 — 운영에 반입 금지! (32바이트 이상 Base64 권장)
     key: "Ixp3HCXOS5Hi0py81JF610NG5nvySPjBq3VQXPmwsLI="
+gateway:
+  trusted:
+    secret: "cue-code-secret-key-for-internal-communication"
