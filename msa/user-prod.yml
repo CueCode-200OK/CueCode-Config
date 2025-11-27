@@ -68,11 +68,11 @@ jwt:
     creator: cuecoder
     access:
       valid:
-        time: "300"
+        time: "10800"
       name: jwtAccessToken
     refresh:
       valid:
-        time: "3600"
+        time: "10800"
       name: jwtRefreshToken
     cookie:
       domain: .cuecode.kr
