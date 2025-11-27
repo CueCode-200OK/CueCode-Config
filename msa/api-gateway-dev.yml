@@ -66,8 +66,6 @@ spring:
               uri: http://localhost:8000 # mediapipe-fastapi local service
               predicates:
                 - Path=/api/sentence/generate
-              filters:
-                - StripPrefix=1
             # ----------------------------------------------------------------
 
             # 2. User-Service 라우팅

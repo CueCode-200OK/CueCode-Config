@@ -68,8 +68,7 @@ spring:
               uri: http://mediapipe-fastapi:8000
               predicates:
                 - Path=/api/sentence/generate
-              filters:
-                - StripPrefix=1
+
             # ----------------------------------------------------------------
 
             # 2. User-Service 라우팅
