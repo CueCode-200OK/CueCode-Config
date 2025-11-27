@@ -63,6 +63,15 @@ spring:
               predicates:
                 - Path=/api/v1/recorded-motions/**
 
+            # --- Add new route for mediapipe-fastapi sentence generation ---
+            - id: mediapipe_fastapi_sentence_route
+              uri: http://mediapipe-fastapi:8000
+              predicates:
+                - Path=/api/sentence/generate
+              filters:
+                - StripPrefix=1
+            # ----------------------------------------------------------------
+
             # 2. User-Service 라우팅
             - id: user_login_route
               uri: ${service.uri.user}
